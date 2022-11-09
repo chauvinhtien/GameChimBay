@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         {
             direction = Vector3.up * strenght; // Vector3.up = new Vector3(0,1,0)
         }
-
+        
 
         //Cộng biến Vector3() "direction" với biến "gravity" 
         direction.y += gravity * Time.deltaTime; //=> nhân Time.deltaTime để k có sự chênh lệch khi các máy có tốc độ phát khác nhau.

@@ -24,5 +24,6 @@ public class SpawnObstacle : MonoBehaviour
     private void Spawn()
     {
         GameObject pipes = Instantiate(obstacle,transform.position,Quaternion.identity);
+        pipes.transform.position += Vector3.up * Random.Range(minHeigth,maxHeight);
     }
 }
