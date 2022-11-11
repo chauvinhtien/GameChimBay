@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    //Khai Báo Game Object Game Manager
+    [SerializeField] GameObject gameManager;
+    private GameManager gManager;
     //Khai báo kiểu dữ liệu Vector3(x,y,z)
     private Vector3 direction;
 
@@ -18,13 +22,13 @@ public class PlayerController : MonoBehaviour
     
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
+        gManager = gameManager.gameObject.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
         if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))  // Hoặc trong C# là "||" : //GetMouseButtonDown(0) = nhấn chuột trái
@@ -36,5 +40,17 @@ public class PlayerController : MonoBehaviour
         //Cộng biến Vector3() "direction" với biến "gravity" 
         direction.y += gravity * Time.deltaTime; //=> nhân Time.deltaTime để k có sự chênh lệch khi các máy có tốc độ phát khác nhau.
         transform.position += direction * Time.deltaTime; //=> thay đổi vị trí của con chim theo Vector3 "direction" đã được cộng thên ở trên.
-    }                                       
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "Obstacle")
+        {
+            gManager.GameOver();
+        }
+        if(other.gameObject.tag == "Point")
+        {
+            Debug.Log("cộng 1 điểm");
+        }
+    }                                     
 }
