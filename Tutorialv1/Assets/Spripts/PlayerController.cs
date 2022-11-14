@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     //Khai Báo Game Object Game Manager
     [SerializeField] GameObject gameManager;
     private GameManager gManager;
+    //Khai báo biến Object Soundmnager
+    [SerializeField] GameObject soundManager;
+    private Sound sound;
     //Khai báo kiểu dữ liệu Vector3(x,y,z)
     private Vector3 direction;
 
@@ -19,12 +22,13 @@ public class PlayerController : MonoBehaviour
 
     //Khai báo biến cho trọng lực
     [SerializeField] private float gravity;
-    
 
+    
     // Start is called before the first frame update
     private void Start()
     {
         gManager = gameManager.gameObject.GetComponent<GameManager>();
+        sound = soundManager.gameObject.GetComponent<Sound>();
     }
 
     // Update is called once per frame
@@ -34,6 +38,8 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))  // Hoặc trong C# là "||" : //GetMouseButtonDown(0) = nhấn chuột trái
         {
             direction = Vector3.up * strenght; // Vector3.up = new Vector3(0,1,0)
+
+            sound.PlayFlap(); // phát âm thanh vỗ cánh
         }
         
 
@@ -46,11 +52,13 @@ public class PlayerController : MonoBehaviour
     {
         if(other.gameObject.tag == "Obstacle")
         {
+            sound.PlayHit();
             gManager.GameOver();
         }
         if(other.gameObject.tag == "Point")
         {
-            Debug.Log("cộng 1 điểm");
+            sound.PlayPoint();
+            gManager.IncreaseScore();
         }
     }                                     
 }
